@@ -8,11 +8,16 @@
     <link rel="stylesheet" href="./assets/style.css">
     <title>Document</title>
 </head>
+<header>
+    <h1>Weather Dashboard</h1>
+</header>
+
+<br>
 
 <body>
     <nav class="search">
-        <form action="">
-            <input type="text" placeholder="search city" name="search">
+        <form id="search-form">
+            <input type="text" placeholder="search city" name="search" required>
             <button type="submit">Submit</button>
         </form>
     </nav>
@@ -20,10 +25,10 @@
         <section class="current-info">
             <section class="Date">
                 <section class="time" id="time">
-                    1:00pm <span id="am-pm">PM</span>
+
                 </section>
                 <section class="date">
-                    Thursday July, 20th 2022
+
                 </section>
                 <section class="weather-container" id="current-weather-item">
                     <section class="weather-item">
