@@ -1,5 +1,6 @@
 var currentDate = document.querySelector(".date-container");
 var searchForm = document.querySelector("#search-form");
+var weatherForecast = document.querySelector("#weather-forecast");
 var API_KEY = "533d85454b838c8602df5b7476173c44";
 var currentWeatherItemsEl = document.getElementById("current-weather-item");
 var cityName = "San Diego";
@@ -51,8 +52,27 @@ function fetchForecast(lat, lon) {
     .then((result) => result.json())
     .then((data) => {
       // console.log(data.list);
+      weatherForecast.innerHTML = "";
       for (let i = 5; i < data.list.length; i += 8) {
         console.log(data.list[i]);
+        //generate a forecast-item and append it
+        var forecastCard = document.createElement("section");
+        forecastCard.classList.add("forecast-item");
+        forecastCard.innerHTML = `<section class="day">${new Date(
+          data.list[i].dt * 1000
+        ).toLocaleString("en-US", {
+          weekday: "short",
+        })}</section>
+         <img src="http://openweathermap.org/img/wn/${
+           data.list[i].weather[0].icon
+         }@2x.png" alt="weather icon" class="w-icon">
+        <p>Temp: ${data.list[i].main.temp}° F</p>
+        <p>Wind Speed: ${data.list[i].wind.speed} mph</p>
+        <p>Humidity: ${data.list[i].main.humidity}%</p>
+        <p>UV Index: ${data.list[i].main.humidity}%</p>
+        `;
+
+        weatherForecast.append(forecastCard);
       }
     })
     .catch((err) => {
