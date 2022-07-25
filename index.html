@@ -8,74 +8,55 @@
     <link rel="stylesheet" href="./assets/style.css">
     <title>Document</title>
 </head>
-<header>
-    <h1>Weather Dashboard</h1>
-</header>
-
-<br>
 
 <body>
-    
-    <nav class="search">
-        <form id="search-form">
-            <input type="text" placeholder="search city" name="search" required>
-            <button type="submit">Submit</button>
-        </form>
-    </nav>
-    <section class="container">
-        <section class="current-info">
-            <section class="date-container">
+    <section id="top-section">
 
-                <!-- current date display?-->
-            </section>
-            <section class="place-container">
-                <!--city display??-->
-            </section>
-        </section>
+        <div>
+            <header>
+                Weather Dashboard
+            </header>
+            <nav class="search">
+                <form id="search-form">
+                    <input id="search-input" type="text" placeholder="search city" name="search" required>
+                    <button type="submit">Submit</button>
+                </form>
+                <div class="search-list">
+                    Search history
+                 <ul id="search-ul">
+                    <!-- <li><button>Atlanta</button></li>
+                    <li><button>San Diego</button></li>
+                    <li><button>Sacramento</button></li> -->
+                 </ul>
+
+                </div>
+            </nav>
+        </div>
+        <div>
+            <!-- <section class="container"> -->
+                <!-- <section class="current-info"> -->
+                    <section class="date-container">
+
+                        <!-- current date display?-->
+                    </section>
+                <!-- </section> -->
+            <!-- </section> -->
+            <div class="currentWeather">
+
+                <!-- <section>icon</section>
+                <section>Humidity</section>
+                <section>temperature</section>
+                <section>Wind Speed</section> -->
+            </div>
+        </div>
+
     </section>
 
-    <section class="future-weather">
-        <!-- <section class="today" id="current-temp">
-            
-            <img src="http://openweathermap.org/img/wn/10d@2x.png" alt="weather icon" class="w-icon">
-            <section class="other">
-                <section class="day">Monday</section>
-                <section class="temp">Day</section>
-                <section class="temp">Night</section>
-            </section>
-        </section> -->
-        <section class="weather-forecast" id="weather-forecast">
-            <!-- <section class="forecast-item">
-                <section class="day">Tues</section>
-                <img src="http://openweathermap.org/img/wn/10d@2x.png" alt="weather icon" class="w-icon">
-                <section class="temp">Day</section>
-                <section class="temp">Night</section>
-            </section>
-            <section class="forecast-item">
-                <section class="day">WED</section>
-                <img src="http://openweathermap.org/img/wn/10d@2x.png" alt="weather icon" class="w-icon">
-                <section class="temp">Day</section>
-                <section class="temp">Night</section>
-            </section>
-            <section class="forecast-item">
-                <section class="day">Thurs</section>
-                <img src="http://openweathermap.org/img/wn/10d@2x.png" alt="weather icon" class="w-icon">
-                <section class="temp">Day</section>
-                <section class="temp">Night</section>
-            </section>
-            <section class="forecast-item">
-                <section class="day">Fri</section>
-                <img src="http://openweathermap.org/img/wn/10d@2x.png" alt="weather icon" class="w-icon">
-                <section class="temp">Day</section>
-                <section class="temp">Night</section>
-            </section>
-            <section class="forecast-item">
-                <section class="day">Sat</section>
-                <img src="http://openweathermap.org/img/wn/10d@2x.png" alt="weather icon" class="w-icon">
-                <section class="temp">Day</section>
-                <section class="temp">Night</section>
-            </section> -->
-        </section>
+    <section class="weather-forecast">
+        <h2>5-day Forecast</h2><br />
+        <div id="weather-forecast">
+        </div>
+
     </section>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
     <script src="./assets/script.js"></script>

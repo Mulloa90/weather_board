@@ -3,7 +3,9 @@ var searchForm = document.querySelector("#search-form");
 var weatherForecast = document.querySelector("#weather-forecast");
 var API_KEY = "533d85454b838c8602df5b7476173c44";
 var currentWeatherItemsEl = document.getElementById("current-weather-item");
-var cityName = "San Diego";
+
+var searchedCityNames = JSON.parse(localStorage.getItem("searchedCity")) || [];
+console.log(searchedCityNames);
 
 currentDate.textContent = new Date().toLocaleString("en-US", {
   weekday: "long",
@@ -12,8 +14,7 @@ currentDate.textContent = new Date().toLocaleString("en-US", {
   year: "numeric",
 });
 
-function getLatandLon(e) {
-  e.preventDefault();
+function getLatandLon(cityName) {
   fetch(
     `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${API_KEY}`
   )
@@ -21,7 +22,12 @@ function getLatandLon(e) {
       return result.json();
     })
     .then((data) => {
-      console.log(data);
+      if (!searchedCityNames.includes(data[0].name)) {
+        searchedCityNames.push(data[0].name);
+        console.log(searchedCityNames);
+        localStorage.setItem("searchedCity", JSON.stringify(searchedCityNames));
+        renderSearchHistory();
+      }
       fetchCurrentWeather(data[0].lat, data[0].lon);
       fetchForecast(data[0].lat, data[0].lon);
     })
@@ -30,7 +36,12 @@ function getLatandLon(e) {
     });
 }
 
-searchForm.addEventListener("submit", getLatandLon);
+
+searchForm.addEventListener("submit", function (e){
+  e.preventDefault();
+  var cityName = document.getElementById('search-input').value
+  getLatandLon(cityName)
+});
 
 function fetchCurrentWeather(lat, lon) {
   fetch(
@@ -39,6 +50,7 @@ function fetchCurrentWeather(lat, lon) {
     .then((result) => result.json())
     .then((data) => {
       console.log(data);
+      displayCurrentWeather(data)
     })
     .catch((err) => {
       console.log(err);
@@ -54,7 +66,6 @@ function fetchForecast(lat, lon) {
       // console.log(data.list);
       weatherForecast.innerHTML = "";
       for (let i = 5; i < data.list.length; i += 8) {
-        console.log(data.list[i]);
         //generate a forecast-item and append it
         var forecastCard = document.createElement("section");
         forecastCard.classList.add("forecast-item");
@@ -80,37 +91,38 @@ function fetchForecast(lat, lon) {
     });
 }
 
-// function weatherData() {
-//   navigator.geolocation.getCurrentPosition((success) => {
-//     let { latitude, longitude } = success.coords;
+renderSearchHistory();
 
-//     fetch(
-//       `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=hourly,minutely&units=imperial&appid=${API_KEY}`
-//     )
-//       .then(result.json())
-//       .then((data) => {
-//         console.log(data);
-//         displayWeatherData(data);
-//       });
-//   });
-// }
+function renderSearchHistory() {
+  //fetch search history from local storage
+  var arrayFromStorage =
+    JSON.parse(localStorage.getItem("searchedCity")) || [];
+  console.log(arrayFromStorage);
+  //clear out the UL
+  document.getElementById("search-ul").innerHTML = "";
+  //loop over the array
+  arrayFromStorage.forEach((name) => {
+    //create a button for each name
+    var listItem = document.createElement("li");
+    var button = document.createElement('button');
+    button.textContent = name;
+    button.addEventListener('click', function (){
+      getLatandLon(name)
+    })
+    listItem.append(button)
+    //append it to the UL
+    document.getElementById("search-ul").append(listItem);
+  });
+}
+function displayCurrentWeather (data) {
 
-function displayWeatherData() {
-  let { humidity, pressure, sunrise, sunset, wind_speed } = data.current;
-  currentWeatherItemsEl.innerHTML = ` <div class="weather-item">
-<div>Humidity</div>
-<div>${humidity}%</<div>
- <div class="weather-item">
-<div>Pressure</div>
-<div>${pressure}</<div>
-<div class="weather-item">
-<div>Sunrise</div>
-<div>${window.moment(sunrise * 1000).format("HH:mm a")}</<div>
-<div class="weather-item">
-<div>Sunset</div>
-<div>${window.moment(sunset * 1000).format("HH:mm a")}</<div>
-<div class="weather-item">
-<div>Wind Speed</div>
-<div>${wind_speed}</<div>
-`;
+  document.querySelector('.currentWeather').innerHTML=`
+  <img src="http://openweathermap.org/img/wn/${
+    data.weather[0].icon
+  }@2x.png" alt="weather icon" class="w-icon">
+  <p>Temp: ${data.main.temp} ° F</p>
+  <p>Humidity: ${data.main.humidity}%</p>
+  <p>Wind speed: ${data.wind.speed} mph</p>
+  `
+
 }

@@ -1,12 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@100;200;400;700&display=swap');
 
-h1 {
+header {
+    font-size: 24px;
     font-family: 'Quicksand', sans-serif;
    color:white;
    background: rgba(24, 24, 28, 0.7);
    padding: 20px;
    color: white;
-   width: 30%;
+   width: max-content;
+   /* width: 30%; */
    margin: 0 10px;
    border: 1px solid white;
    border-radius: 10px;
@@ -35,7 +37,12 @@ button {
     margin: 0;
     padding: 0;
 }
-
+.currentWeather {
+    background: rgba(24, 24, 28, 0.7);
+    padding: 25px;
+    color: white;
+    margin: 20px;
+}
 body {
     background: url('https://surfstylevacationhomes.com/wp-content/uploads/2019/11/Winansea.jpg');
     background-repeat: no-repeat;
@@ -56,39 +63,27 @@ body {
     flex-wrap: wrap;
 }
 
-.future-weather {
-    background: rgba(24, 24, 28, 0.7);
-    padding: 25px;
-    position: fixed;
-    bottom: 0;
-    color: white;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-}
-
-.future-weather .today {
+#top-section{
     display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
-.future-weather .today .day {
-    padding: 5px 15px;
-    background: #3c3c44;
-    border-radius: 50px;
+#top-section > div {
+    width: 50%;
+}
+
+
+
+.weather-forecast {
+    background: rgba(24, 24, 28, 0.7);
+    color: white;
+    padding: 50px 0px;
     text-align: center;
-
 }
 
-.future-weather .today .temp {
-    font-size: 20px;
-    padding-top: 15px;
-}
-
-
-
-.future-weather .weather-forecast {
+#weather-forecast{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     display: flex;
 
 }
@@ -114,6 +109,8 @@ body {
 
 .weather-forecast .forecast-item .temp {
     font-weight: 100;
+    font-size: 20px;
+    padding-top: 15px;
 }
 
 @media only screen and (max-width:730px) {
@@ -123,4 +120,13 @@ body {
         overflow-y: scroll;
     }
 
+}
+
+.search-list{
+    background-color: #3c3c44;
+    color: white;
+}
+
+.search-list ul {
+    list-style: none;
 }
