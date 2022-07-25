@@ -114,12 +114,7 @@ body {
 }
 
 @media only screen and (max-width:730px) {
-    .future-weather {
-        justify-content: start;
-        align-items: none;
-        overflow-y: scroll;
-    }
-
+    
 }
 
 .search-list{
