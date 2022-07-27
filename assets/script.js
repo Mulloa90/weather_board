@@ -13,7 +13,7 @@ currentDate.textContent = new Date().toLocaleString("en-US", {
   month: "long",
   year: "numeric",
 });
-
+//fectching geographic location to get coordinates
 function getLatandLon(cityName) {
   fetch(
     `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${API_KEY}`
@@ -27,7 +27,7 @@ function getLatandLon(cityName) {
         console.log(searchedCityNames);
         localStorage.setItem("searchedCity", JSON.stringify(searchedCityNames));
         renderSearchHistory();
-      }
+      } // turn coordinates into city names
       fetchCurrentWeather(data[0].lat, data[0].lon);
       fetchForecast(data[0].lat, data[0].lon);
     })
@@ -56,7 +56,7 @@ function fetchCurrentWeather(lat, lon) {
       console.log(err);
     });
 }
-
+// fetch weather and display on page using inner html
 function fetchForecast(lat, lon) {
   fetch(
     `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=imperial&appid=${API_KEY}`
@@ -80,7 +80,7 @@ function fetchForecast(lat, lon) {
         <p>Temp: ${data.list[i].main.temp}° F</p>
         <p>Wind Speed: ${data.list[i].wind.speed} mph</p>
         <p>Humidity: ${data.list[i].main.humidity}%</p>
-        <p>UV Index: ${data.list[i].main.humidity}%</p>
+   
         `;
 
         weatherForecast.append(forecastCard);
@@ -92,7 +92,7 @@ function fetchForecast(lat, lon) {
 }
 
 renderSearchHistory();
-
+// city search history & save to local storage 
 function renderSearchHistory() {
   //fetch search history from local storage
   var arrayFromStorage =
@@ -115,7 +115,7 @@ function renderSearchHistory() {
   });
 }
 function displayCurrentWeather (data) {
-
+//displaying current weather 
   document.querySelector('.currentWeather').innerHTML=`
   <img src="http://openweathermap.org/img/wn/${
     data.weather[0].icon
