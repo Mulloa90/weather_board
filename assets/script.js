@@ -16,7 +16,7 @@ currentDate.textContent = new Date().toLocaleString("en-US", {
 //fectching geographic location to get coordinates
 function getLatandLon(cityName) {
   fetch(
-    `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${API_KEY}`
+    `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${API_KEY}`
   )
     .then((result) => {
       return result.json();
@@ -36,11 +36,10 @@ function getLatandLon(cityName) {
     });
 }
 
-
-searchForm.addEventListener("submit", function (e){
+searchForm.addEventListener("submit", function (e) {
   e.preventDefault();
-  var cityName = document.getElementById('search-input').value
-  getLatandLon(cityName)
+  var cityName = document.getElementById("search-input").value;
+  getLatandLon(cityName);
 });
 
 function fetchCurrentWeather(lat, lon) {
@@ -50,7 +49,7 @@ function fetchCurrentWeather(lat, lon) {
     .then((result) => result.json())
     .then((data) => {
       console.log(data);
-      displayCurrentWeather(data)
+      displayCurrentWeather(data);
     })
     .catch((err) => {
       console.log(err);
@@ -74,7 +73,7 @@ function fetchForecast(lat, lon) {
         ).toLocaleString("en-US", {
           weekday: "short",
         })}</section>
-         <img src="http://openweathermap.org/img/wn/${
+         <img src="https://openweathermap.org/img/wn/${
            data.list[i].weather[0].icon
          }@2x.png" alt="weather icon" class="w-icon">
         <p>Temp: ${data.list[i].main.temp}° F</p>
@@ -92,11 +91,10 @@ function fetchForecast(lat, lon) {
 }
 
 renderSearchHistory();
-// city search history & save to local storage 
+// city search history & save to local storage
 function renderSearchHistory() {
   //fetch search history from local storage
-  var arrayFromStorage =
-    JSON.parse(localStorage.getItem("searchedCity")) || [];
+  var arrayFromStorage = JSON.parse(localStorage.getItem("searchedCity")) || [];
   console.log(arrayFromStorage);
   //clear out the UL
   document.getElementById("search-ul").innerHTML = "";
@@ -104,25 +102,22 @@ function renderSearchHistory() {
   arrayFromStorage.forEach((name) => {
     //create a button for each name
     var listItem = document.createElement("li");
-    var button = document.createElement('button');
+    var button = document.createElement("button");
     button.textContent = name;
-    button.addEventListener('click', function (){
-      getLatandLon(name)
-    })
-    listItem.append(button)
+    button.addEventListener("click", function () {
+      getLatandLon(name);
+    });
+    listItem.append(button);
     //append it to the UL
     document.getElementById("search-ul").append(listItem);
   });
 }
-function displayCurrentWeather (data) {
-//displaying current weather 
-  document.querySelector('.currentWeather').innerHTML=`
-  <img src="http://openweathermap.org/img/wn/${
-    data.weather[0].icon
-  }@2x.png" alt="weather icon" class="w-icon">
+function displayCurrentWeather(data) {
+  //displaying current weather
+  document.querySelector(".currentWeather").innerHTML = `
+  <img src="https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png" alt="weather icon" class="w-icon">
   <p>Temp: ${data.main.temp} ° F</p>
   <p>Humidity: ${data.main.humidity}%</p>
   <p>Wind speed: ${data.wind.speed} mph</p>
-  `
-
+  `;
 }
